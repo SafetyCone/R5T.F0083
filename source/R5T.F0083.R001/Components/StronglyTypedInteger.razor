@@ -1,0 +1,30 @@
+﻿@namespace R5T.F0083.R001
+
+@inherits StronglyTypedBase
+
+
+using System;
+
+using R5T.T0150;
+using R5T.T0151;
+
+
+namespace @this.NamespaceName
+{
+    /// <summary>
+    /// @this.Description
+    /// </summary>
+    [@(this.DraftString)StrongTypeMarker]
+    public class @this.TypeName : TypedInteger, I@(this.DraftString)StrongTypeMarker
+    {
+        public @(this.TypeName)(int value)
+            : base(value)
+        {
+        }
+    }
+}
+
+
+@code {
+    /// See <see cref="StronglyTypedBase"/>
+}
