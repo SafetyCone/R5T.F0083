@@ -1,0 +1,31 @@
+﻿@namespace R5T.F0083.R001
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@this.PageTitle</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css-out/tailwind.css" />
+</head>
+
+<body>
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui" style="display:none;">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script suppress-error="BL9992" src="_framework/blazor.webassembly.js"></script>
+</body>
+
+</html>
+
+@code {
+    [Parameter]
+    public string PageTitle { get; set; }
+}

@@ -1,0 +1,15 @@
+﻿@namespace R5T.F0083.R001
+
+
+@Instances.RazorOperator.AsText("<Router AppAssembly=\"@typeof(App).Assembly\">")
+    @Instances.RazorOperator.AsText("<Found Context=\"routeData\">")
+        @Instances.RazorOperator.AsText("@<RouteView RouteData=\"@routeData\" DefaultLayout=\"@typeof(MainLayout)\" />")
+        @*<FocusOnNavigate RouteData="@routeData" Selector="h1" />*@
+    @Instances.RazorOperator.AsText("</Found>")
+    @Instances.RazorOperator.AsText("<NotFound>")
+        @Instances.RazorOperator.AsText("<PageTitle>Not found</PageTitle>")
+        @Instances.RazorOperator.AsText("<LayoutView Layout=\"@typeof(MainLayout)\">")
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        @Instances.RazorOperator.AsText("</LayoutView>")
+    @Instances.RazorOperator.AsText("</NotFound>")
+@Instances.RazorOperator.AsText("</Router>")

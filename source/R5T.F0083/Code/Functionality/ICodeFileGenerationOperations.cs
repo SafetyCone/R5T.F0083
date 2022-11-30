@@ -7,13 +7,91 @@ using R5T.F0079;
 using R5T.T0132;
 
 using R5T.F0083.R001;
-
+using R5T.D0083.R001;
 
 namespace R5T.F0083
 {
 	[FunctionalityMarker]
 	public partial interface ICodeFileGenerationOperations : IFunctionalityMarker
 	{
+        public async Task CreateIndexHtmlFile(
+            string codeFilePath,
+            string pageTitle)
+        {
+            await this.GenerateFromComponent<IndexHtmlFile>(
+                codeFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.PageTitle, pageTitle)
+                        ;
+                });
+        }
+
+        public async Task CreateIndexRazorFile_WebBlazorClient(
+            string appRazorFilePath)
+        {
+            await this.GenerateFromComponent<Index_WebBlazorClient>(
+                appRazorFilePath);
+        }
+
+        public async Task CreateMainLayoutRazorFile_WebBlazorClient(
+            string appRazorFilePath)
+        {
+            await this.GenerateFromComponent<MainLayout_WebBlazorClient>(
+                appRazorFilePath);
+        }
+
+        public async Task CreateImportsRazorFile_WebBlazorClient_Main(
+            string appRazorFilePath)
+        {
+            await this.GenerateFromComponent<Imports_WebBlazorClient_Main>(
+                appRazorFilePath);
+        }
+
+        public async Task CreateAppRazorFile_WebBlazorClient(
+            string appRazorFilePath)
+        {
+            await this.GenerateFromComponent<App_WebBlazorClient>(
+                appRazorFilePath);
+        }
+
+        public async Task CreateTailwindCssFile(
+            string cssFilePath)
+        {
+            await this.GenerateFromComponent<TailwindCssFile>(
+                cssFilePath);
+        }
+
+        public async Task CreateTailwindConfigJsFile(
+            string jsFilePath)
+        {
+            await this.GenerateFromComponent<TailwindConfigJsFile>(
+                jsFilePath);
+        }
+
+        public async Task CreatePackageJsonFile(
+            string jsonFilePath,
+            string projectName,
+            string projectDescription,
+            bool lowerProjectName = true)
+        {
+            var actualProjectName = lowerProjectName
+                ? F0000.StringOperator.Instance.Lower(projectName)
+                : projectName
+                ;
+
+            await this.GenerateFromComponent<PackageJsonFile>(
+                jsonFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.ProjectName, actualProjectName)
+                        .SetParameter(c => c.ProjectDescription, projectDescription)
+                        ;
+                });
+        }
+
         public async Task CreateLaunchSettings_WebServerForBlazorClient(
             string codeFilePath,
             string projectName)
@@ -130,6 +208,18 @@ namespace R5T.F0083
             string namespaceName)
         {
             await this.GenerateFromComponent<ProgramFile_WebServerForBlazorClient>(
+                programCodeFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer.SetParameter(c => c.NamespaceName, namespaceName);
+                });
+        }
+
+        public async Task CreateProgramFile_WebBlazorClient(
+            string programCodeFilePath,
+            string namespaceName)
+        {
+            await this.GenerateFromComponent<ProgramFile_WebBlazorClient>(
                 programCodeFilePath,
                 componentRenderer =>
                 {
