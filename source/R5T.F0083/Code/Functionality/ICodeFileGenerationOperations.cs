@@ -14,6 +14,45 @@ namespace R5T.F0083
 	[FunctionalityMarker]
 	public partial interface ICodeFileGenerationOperations : IFunctionalityMarker
 	{
+        public async Task CreateTailwindCssContentPathsJsonFile(
+            string tailwindCssContentPathsJsonFilePath)
+        {
+            await this.GenerateFromComponent<TailwindCssContentPaths>(
+                tailwindCssContentPathsJsonFilePath);
+        }
+
+        public async Task CreateIndexRazorFile(
+            string razorFilePath,
+            string pageTitle)
+        {
+            await this.GenerateFromComponent<Index_RazorFile>(
+                razorFilePath);
+        }
+
+        public async Task CreateNamespaceNamedComponent<TComponent>(
+            string filePath,
+            string namespaceName)
+            where TComponent : R001.Internal.NamespaceNamedBase
+        {
+            await this.GenerateFromComponent<TComponent>(
+                filePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        ;
+                });
+        }
+
+        public async Task CreateExampleComponentRazorFile(
+            string razorFilePath,
+            string namespaceName)
+        {
+            await this.CreateNamespaceNamedComponent<ExampleComponent>(
+                razorFilePath,
+                namespaceName);
+        }
+
         public async Task CreateIndexHtmlFile(
             string codeFilePath,
             string pageTitle)
@@ -35,18 +74,46 @@ namespace R5T.F0083
                 appRazorFilePath);
         }
 
+        public async Task CreateStaticRazorComponentsHost(
+            string hostRazorFilePath,
+            string namespaceName)
+        {
+            await this.GenerateFromComponent<StaticRazorComponentsHost>(
+                hostRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        ;
+                });
+        }
+
         public async Task CreateMainLayoutRazorFile_WebBlazorClient(
-            string appRazorFilePath)
+            string appRazorFilePath,
+            string namespaceName)
         {
             await this.GenerateFromComponent<MainLayout_WebBlazorClient>(
-                appRazorFilePath);
+                appRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        ;
+                });
         }
 
         public async Task CreateImportsRazorFile_WebBlazorClient_Main(
-            string appRazorFilePath)
+            string appRazorFilePath,
+            string projectNamespaceName)
         {
             await this.GenerateFromComponent<Imports_WebBlazorClient_Main>(
-                appRazorFilePath);
+                appRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        ;
+                });
         }
 
         public async Task CreateAppRazorFile_WebBlazorClient(
@@ -54,6 +121,20 @@ namespace R5T.F0083
         {
             await this.GenerateFromComponent<App_WebBlazorClient>(
                 appRazorFilePath);
+        }
+
+        public async Task CreateAppRazorFile_StaticRazorComponents(
+            string appRazorFilePath,
+            string namespaceName)
+        {
+            await this.GenerateFromComponent<App_StaticRazorComponents>(
+                appRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        ;
+                });
         }
 
         public async Task CreateTailwindCssFile(
@@ -92,12 +173,26 @@ namespace R5T.F0083
                 });
         }
 
+        public async Task CreateLaunchSettings_WebServer(
+            string jsonFilePath,
+            string projectName)
+        {
+            await this.GenerateFromComponent<LaunchSettings_WebServer>(
+                jsonFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.ProjectName, projectName)
+                        ;
+                });
+        }
+
         public async Task CreateLaunchSettings_WebServerForBlazorClient(
-            string codeFilePath,
+            string jsonFilePath,
             string projectName)
         {
             await this.GenerateFromComponent<LaunchSettings_WebServerForBlazorClient>(
-                codeFilePath,
+                jsonFilePath,
                 componentRenderer =>
                 {
                     componentRenderer
@@ -128,7 +223,7 @@ namespace R5T.F0083
             string typeName,
             string description,
             bool isDraft = false)
-            where TStronglyTypedComponent : StronglyTypedBase
+            where TStronglyTypedComponent : R001.Internal.StronglyTypedBase
         {
             await this.GenerateFromComponent<TStronglyTypedComponent>(
                 codeFilePath,
@@ -208,6 +303,18 @@ namespace R5T.F0083
             string namespaceName)
         {
             await this.GenerateFromComponent<ProgramFile_WebServerForBlazorClient>(
+                programCodeFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer.SetParameter(c => c.NamespaceName, namespaceName);
+                });
+        }
+
+        public async Task CreateProgramFile_WebStaticRazorComponents(
+            string programCodeFilePath,
+            string namespaceName)
+        {
+            await this.GenerateFromComponent<ProgramFile_WebStaticRazorComponents>(
                 programCodeFilePath,
                 componentRenderer =>
                 {

@@ -1,11 +1,18 @@
 ﻿@namespace R5T.F0083.R001
 
 
-@("@using System.Net.Http")
-@("@using System.Net.Http.Json")
-@("@using Microsoft.AspNetCore.Components.Forms")
-@("@using Microsoft.AspNetCore.Components.Routing")
-@("@using Microsoft.AspNetCore.Components.Web")
-@("@using Microsoft.AspNetCore.Components.Web.Virtualization")
-@("@using Microsoft.AspNetCore.Components.WebAssembly.Http")
-@("@using Microsoft.JSInterop")
+@Instances.RazorOperator.AsText("@using System.Net.Http")
+@Instances.RazorOperator.AsText("@using System.Net.Http.Json")
+@Instances.RazorOperator.AsText("@using Microsoft.AspNetCore.Components.Forms")
+@Instances.RazorOperator.AsText("@using Microsoft.AspNetCore.Components.Routing")
+@Instances.RazorOperator.AsText("@using Microsoft.AspNetCore.Components.Web")
+@Instances.RazorOperator.AsText("@using Microsoft.AspNetCore.Components.Web.Virtualization")
+@Instances.RazorOperator.AsText("@using Microsoft.AspNetCore.Components.WebAssembly.Http")
+@Instances.RazorOperator.AsText("@using Microsoft.JSInterop")
+@Instances.RazorOperator.AsText($"@using {this.ProjectNamespaceName}")
+
+
+@code {
+    [Parameter]
+    public string ProjectNamespaceName { get; set; }
+}

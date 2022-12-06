@@ -1,0 +1,23 @@
+﻿@namespace R5T.F0083.R001
+
+@Instances.RazorOperator.AsText("@using Microsoft.AspNetCore.Components.Routing")
+@Instances.RazorOperator.AsText("@using Microsoft.AspNetCore.Components.Web")
+
+
+@Instances.RazorOperator.AsText($"@namespace {this.NamespaceName}")
+
+@Instances.RazorOperator.AsText("<Router AppAssembly=\"@typeof(App).Assembly\">")
+    @Instances.RazorOperator.AsText("<Found Context=\"routeData\">")
+        @Instances.RazorOperator.AsText("<RouteView RouteData=\"@routeData\" />")
+    @Instances.RazorOperator.AsText("</Found>")
+    @Instances.RazorOperator.AsText("<NotFound>")
+        @Instances.RazorOperator.AsText("<PageTitle>Not found</PageTitle>")
+        @Instances.RazorOperator.AsText("<p role=\"alert\">Sorry, there's nothing at this address.</p>")
+    @Instances.RazorOperator.AsText("</NotFound>")
+@Instances.RazorOperator.AsText("</Router>")
+
+
+@code{
+    [Parameter]
+    public string NamespaceName { get; set; }
+}

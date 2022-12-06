@@ -1,6 +1,14 @@
 ﻿@namespace R5T.F0083.R001
 
+@Instances.RazorOperator.AsText($"@namespace {this.NamespaceName}")
 
-@inherits LayoutComponentBase
 
-@this.Body
+@Instances.RazorOperator.AsText("@inherits LayoutComponentBase")
+
+@Instances.RazorOperator.AsText("@this.Body")
+
+
+@code {
+    [Parameter]
+    public string NamespaceName { get; set; }
+}

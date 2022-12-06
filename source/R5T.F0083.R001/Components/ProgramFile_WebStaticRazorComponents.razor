@@ -1,0 +1,36 @@
+﻿@namespace R5T.F0083.R001
+
+
+using System;
+
+using Microsoft.Extensions.DependencyInjection;
+
+using Microsoft.AspNetCore.Builder;
+
+
+namespace @this.NamespaceName
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddRazorPages();
+
+            var app = builder.Build();
+
+            app.UseRouting();
+
+            app.MapFallbackToPage("/_Host");
+
+            app.Run();
+        }
+    }
+}
+
+
+@code {
+    [Parameter]
+    public string NamespaceName { get; set; }
+}

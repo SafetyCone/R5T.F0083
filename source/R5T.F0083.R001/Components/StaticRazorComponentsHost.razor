@@ -1,0 +1,16 @@
+﻿@namespace R5T.F0083.R001
+
+
+@Instances.RazorOperator.AsText("@page \"/\"")
+@Instances.RazorOperator.AsText("@namespace BlazorServer.Pages")
+@Instances.RazorOperator.AsText("@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers")
+
+@Instances.RazorOperator.AsText($"@using {this.NamespaceName}")
+
+@Instances.RazorOperator.AsText("<component type=\"typeof(App)\" render-mode=\"Static\" />")
+
+
+@code{
+    [Parameter]
+    public string NamespaceName { get; set; }
+}
