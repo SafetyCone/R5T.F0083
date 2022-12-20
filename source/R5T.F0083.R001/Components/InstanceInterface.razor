@@ -1,0 +1,47 @@
+﻿@using System.Linq
+
+@namespace R5T.F0083.R001
+
+@inherits Internal.NamespaceNamedBase
+
+
+using System;
+
+@foreach (var namespaceName in this.UsedNamespaceNames
+    .Distinct()
+    .OrderAlphabetically())
+{
+    <text>using @namespaceName;</text>
+}
+
+
+
+namespace @this.NamespaceName
+{
+    [@this.MarkerAttributeName]
+    public partial interface @this.InterfaceName : @this.MarkerInterfaceTypeName
+    {
+
+    }
+}
+
+
+@code{
+    /// <summary>
+    /// Required to enable documentation.
+    /// </summary>
+    [Parameter]
+    public string DummyDocumentationParameter { get; set; }
+
+    [Parameter]
+    public string[] UsedNamespaceNames { get; set; }
+
+    [Parameter]
+    public string MarkerAttributeName { get; set; }
+
+    [Parameter]
+    public string InterfaceName { get; set; }
+
+    [Parameter]
+    public string MarkerInterfaceTypeName { get; set; }
+}

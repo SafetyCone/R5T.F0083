@@ -2,18 +2,19 @@
 
 @inherits Internal.NamespaceNamedBase
 
-
 using System;
 
 
 namespace @this.NamespaceName
 {
-    class Program
+    public class @this.ClassName
     {
-        static void Main()
-        {
-            Console.WriteLine("Hello World!");
-        }
+
     }
 }
 
+
+@code {
+    [Parameter]
+    public string ClassName { get; set; }
+}

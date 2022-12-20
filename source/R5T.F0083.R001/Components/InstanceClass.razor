@@ -1,0 +1,33 @@
+﻿@namespace R5T.F0083.R001
+
+@inherits Internal.NamespaceNamedBase
+
+
+using System;
+
+
+namespace @this.NamespaceName
+{
+    public class @this.ClassTypeName : @this.InterfaceTypeName
+    {
+        #region Infrastructure
+
+        public static @this.InterfaceTypeName Instance { get; } = new @(this.ClassTypeName)();
+
+
+        private @(this.ClassTypeName)()
+        {
+        }
+
+        #endregion
+    }
+}
+
+
+@code{
+    [Parameter]
+    public string ClassTypeName { get; set; }
+
+    [Parameter]
+    public string InterfaceTypeName { get; set; }
+}

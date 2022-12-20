@@ -3,17 +3,127 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
+using R5T.F0000;
 using R5T.F0079;
 using R5T.T0132;
 
 using R5T.F0083.R001;
 using R5T.D0083.R001;
 
+
 namespace R5T.F0083
 {
 	[FunctionalityMarker]
 	public partial interface ICodeFileGenerationOperations : IFunctionalityMarker
 	{
+        public async Task CreateFormDesignerCodeFile(
+            string codeFilePath,
+            string namespaceName,
+            string formName)
+        {
+            await this.CreateNamespaceNamedComponent<FormDesigner>(
+                codeFilePath,
+                namespaceName,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.Name, formName)
+                        ;
+                });
+        }
+
+        public async Task CreateFormClassCodeFile(
+            string codeFilePath,
+            string namespaceName,
+            string formName)
+        {
+            await this.CreateNamespaceNamedComponent<FormClass>(
+                codeFilePath,
+                namespaceName,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.Name, formName)
+                        ;
+                });
+        }
+
+        public async Task CreateInstance_DeployScripts(
+           string codeFilePath,
+           string namespaceName,
+           string targetProjectName)
+        {
+            await this.CreateNamespaceNamedComponent<Instance_DeployScripts>(
+                codeFilePath,
+                namespaceName,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.TargetProjectName, targetProjectName)
+                        ;
+                });
+        }
+
+        public async Task CreateInstanceClassCodeFile(
+            string codeFilePath,
+            string namespaceName,
+            string classTypeName,
+            string interfaceTypeName)
+        {
+            await this.CreateNamespaceNamedComponent<InstanceClass>(
+                codeFilePath,
+                namespaceName,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.ClassTypeName, classTypeName)
+                        .SetParameter(c => c.InterfaceTypeName, interfaceTypeName)
+                        ;
+                });
+        }
+
+        public async Task CreateInstanceInterfaceCodeFile(
+            string codeFilePath,
+            string namspaceName,
+            string interfaceTypeName,
+            string markerAttributeTypeName,
+            string markerInterfaceTypeName,
+            string[] usedNamespacedNames)
+        {
+            var markerAttributeName = TypeNameOperator.Instance.GetAttributeNameFromAttributeTypeName(markerAttributeTypeName);
+
+            await this.CreateNamespaceNamedComponent<InstanceInterface>(
+                codeFilePath,
+                namspaceName,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.InterfaceName, interfaceTypeName)
+                        .SetParameter(c => c.MarkerAttributeName, markerAttributeName)
+                        .SetParameter(c => c.MarkerInterfaceTypeName, markerInterfaceTypeName)
+                        .SetParameter(c => c.UsedNamespaceNames, usedNamespacedNames)
+                        ;
+                });
+        }
+
+        public async Task CreateInstancesClass(
+            string instancesCSharpCodeFilePath,
+            string namespaceName)
+        {
+            await this.CreateNamespaceNamedComponent<InstancesClass>(
+                instancesCSharpCodeFilePath,
+                namespaceName);
+        }
+
+        public async Task CreateInstancesClass_Deploy(
+            string instancesCSharpCodeFilePath,
+            string namespaceName)
+        {
+            await this.CreateNamespaceNamedComponent<InstancesClass_Deploy>(
+                instancesCSharpCodeFilePath,
+                namespaceName);
+        }
+
         public async Task CreateTailwindCssContentPathsJsonFile(
             string tailwindCssContentPathsJsonFilePath)
         {
@@ -31,7 +141,8 @@ namespace R5T.F0083
 
         public async Task CreateNamespaceNamedComponent<TComponent>(
             string filePath,
-            string namespaceName)
+            string namespaceName,
+            Action<ComponentRenderer<TComponent>> setupAction = default)
             where TComponent : R001.Internal.NamespaceNamedBase
         {
             await this.GenerateFromComponent<TComponent>(
@@ -41,7 +152,33 @@ namespace R5T.F0083
                     componentRenderer
                         .SetParameter(c => c.NamespaceName, namespaceName)
                         ;
+
+                    F0000.ActionOperator.Instance.Run(
+                        setupAction,
+                        componentRenderer);
                 });
+        }
+
+        public async Task CreateClassCSharpFile(
+            string classCSharpFilePath,
+            string namespaceName,
+            string className)
+        {
+            await this.CreateNamespaceNamedComponent<Class>(
+                classCSharpFilePath,
+                namespaceName,
+                componentRenderer => componentRenderer.SetParameter(c => c.ClassName, className));
+        }
+
+        public async Task CreateInterfaceCSharpFile(
+            string classCSharpFilePath,
+            string namespaceName,
+            string interfaceName)
+        {
+            await this.CreateNamespaceNamedComponent<Interface>(
+                classCSharpFilePath,
+                namespaceName,
+                componentRenderer => componentRenderer.SetParameter(c => c.InterfaceName, interfaceName));
         }
 
         public async Task CreateExampleComponentRazorFile(
@@ -72,6 +209,26 @@ namespace R5T.F0083
         {
             await this.GenerateFromComponent<Index_WebBlazorClient>(
                 appRazorFilePath);
+        }
+
+        public async Task CreateRazorComponentMarkupFile(
+            string markupFilePath,
+            string namespaceName)
+        {
+            await this.CreateNamespaceNamedComponent<RazorComponentMarkup>(
+                markupFilePath,
+                namespaceName);
+        }
+
+        public async Task CreateRazorComponentCodeBehindFile(
+            string markupFilePath,
+            string namespaceName,
+            string componentName)
+        {
+            await this.CreateNamespaceNamedComponent<RazorComponentCodeBehind>(
+                markupFilePath,
+                namespaceName,
+                componentRenderer => componentRenderer.SetParameter(c => c.ComponentName, componentName));
         }
 
         public async Task CreateStaticRazorComponentsHost(
@@ -302,51 +459,57 @@ namespace R5T.F0083
             string programCodeFilePath,
             string namespaceName)
         {
-            await this.GenerateFromComponent<ProgramFile_WebServerForBlazorClient>(
+            await this.CreateNamespaceNamedComponent<ProgramFile_WebServerForBlazorClient>(
                 programCodeFilePath,
-                componentRenderer =>
-                {
-                    componentRenderer.SetParameter(c => c.NamespaceName, namespaceName);
-                });
+                namespaceName);
         }
 
         public async Task CreateProgramFile_WebStaticRazorComponents(
             string programCodeFilePath,
             string namespaceName)
         {
-            await this.GenerateFromComponent<ProgramFile_WebStaticRazorComponents>(
+            await this.CreateNamespaceNamedComponent<ProgramFile_WebStaticRazorComponents>(
                 programCodeFilePath,
-                componentRenderer =>
-                {
-                    componentRenderer.SetParameter(c => c.NamespaceName, namespaceName);
-                });
+                namespaceName);
+        }
+
+        public async Task CreateProgramFile_WindowsForms(
+            string programCodeFilePath,
+            string namespaceName)
+        {
+            await this.CreateNamespaceNamedComponent<ProgramFile_WindowsForms>(
+                programCodeFilePath,
+                namespaceName);
         }
 
         public async Task CreateProgramFile_WebBlazorClient(
             string programCodeFilePath,
             string namespaceName)
         {
-            await this.GenerateFromComponent<ProgramFile_WebBlazorClient>(
+            await this.CreateNamespaceNamedComponent<ProgramFile_WebBlazorClient>(
                 programCodeFilePath,
-                componentRenderer =>
-                {
-                    componentRenderer.SetParameter(c => c.NamespaceName, namespaceName);
-                });
+                namespaceName);
         }
 
         public async Task CreateProgramFile_Console(
 			string programCodeFilePath,
 			string namespaceName)
 		{
-			await this.GenerateFromComponent<ProgramFile_Console>(
+			await this.CreateNamespaceNamedComponent<ProgramFile_Console>(
 				programCodeFilePath,
-				componentRenderer =>
-				{
-					componentRenderer.SetParameter(c => c.NamespaceName, namespaceName);
-				});
+				namespaceName);
 		}
 
-		public async Task GenerateFromComponent<TComponent>(
+        public async Task CreateProgramFile_DeployScripts(
+            string programCodeFilePath,
+            string namespaceName)
+        {
+            await this.CreateNamespaceNamedComponent<ProgramFile_DeployScripts>(
+                programCodeFilePath,
+                namespaceName);
+        }
+
+        public async Task GenerateFromComponent<TComponent>(
 			string codeFilePath,
 			Action<ComponentRenderer<TComponent>> componentRendererAction = default)
 			where TComponent : IComponent
@@ -355,9 +518,9 @@ namespace R5T.F0083
 				.ModifyWith(componentRendererAction)
                 .Render();
 
-            var trimmedCode = F0000.StringOperator.Instance.Trim(code) + Z0000.Strings.Instance.NewLineForEnvironment;
+            var trimmedCode = StringOperator.Instance.Trim(code) + Z0000.Strings.Instance.NewLineForEnvironment;
 
-            F0000.FileOperator.Instance.WriteText(
+            FileOperator.Instance.WriteText(
                 codeFilePath,
                 trimmedCode);
         }
