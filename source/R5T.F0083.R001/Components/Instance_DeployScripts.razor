@@ -6,7 +6,10 @@
 using System;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Logging;
+
 using R5T.F0000;
+using R5T.F0030;
 using R5T.L0029;
 using R5T.T0132;
 
@@ -16,6 +19,47 @@ namespace @this.NamespaceName
     [FunctionalityMarker]
     public partial interface IDeployScripts : IFunctionalityMarker
     {
+        public async Task RunCertbotRenewal()
+        {
+            var remoteServerFriendlyName = "TechnicalBlog";
+
+            var remoteServerAuthentication = Instances.AwsAuthenticationOperator.GetRemoteServerAuthentication(
+                Instances.FilePaths.AwsRemoteServerConfigurationJsonFilePath,
+                remoteServerFriendlyName);
+
+            await Instances.LoggingOperator.InConsoleLoggerContext(
+                nameof(DeployToLocalCloudBinariesDirectory),
+                async logger =>
+                {
+                    await SshOperator.Instance.InConnectionContext(
+                        remoteServerAuthentication,
+                        async connection =>
+                        {
+                            await SshOperator.Instance.InSshContext_Connected(
+                                connection,
+                                sshClient =>
+                                {
+                                    logger.LogInformation("Renewing certbot certs renewal...");
+
+                                    var renewCommand = sshClient.RunCommand($"sudo certbot renew");
+
+                                    RemoteCommandOperator.Instance.LogCommandResult(renewCommand, logger);
+
+                                    if(RemoteCommandOperator.Instance.IsFailure(renewCommand))
+                                    {
+                                        logger.LogInformation("FAILED to renew certbot certs.");
+                                    }
+                                    else
+                                    {
+                                        logger.LogInformation("Renewed certbot certs.");
+                                    }
+
+                                    return Task.CompletedTask;
+                                });
+                        });
+                });
+        }
+
         public async Task DeployToLocalCloudBinariesDirectory()
         {
             /// Inputs.

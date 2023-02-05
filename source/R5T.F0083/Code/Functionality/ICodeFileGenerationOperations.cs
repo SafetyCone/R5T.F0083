@@ -308,6 +308,13 @@ namespace R5T.F0083
                 jsFilePath);
         }
 
+        public async Task CreateTailwindConfigJsWithTypographyFile(
+            string jsFilePath)
+        {
+            await this.GenerateFromComponent<TailwindConfigJsFile_Typography>(
+                jsFilePath);
+        }
+
         public async Task CreatePackageJsonFile(
             string jsonFilePath,
             string projectName,

@@ -1,0 +1,21 @@
+﻿@namespace R5T.F0083.R001
+
+
+/** @@type {import('tailwindcss').Config} */
+
+const content = require('./tailwind.contentpaths.all.json');
+
+module.exports = {
+  content: content,
+  theme: {
+    extend: {},
+  },
+  plugins: [
+    require('@@tailwindcss/typography')
+  ],
+}
+
+
+@code {
+
+}

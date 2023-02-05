@@ -22,6 +22,8 @@ namespace @this.NamespaceName
 
             var app = builder.Build();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.MapFallbackToPage("/_Host");
