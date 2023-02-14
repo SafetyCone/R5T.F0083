@@ -19,7 +19,7 @@ namespace R5T.F0083.Construction
 
 
 			/// Run.
-			await CodeFileGenerationOperations.Instance.CreateProgram(
+			await CodeFileGenerationOperations.Instance.CreateProgramFile_Console(
 				codeFilePath,
 				namespaceName);
 
