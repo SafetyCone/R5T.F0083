@@ -439,7 +439,7 @@ namespace R5T.F0083
             string description,
             bool isDraft = false)
         {
-            await this.CreateStronglyTypedType<StronglyTypedGuid>(
+            await this.CreateStronglyTypedType<StronglyTypedInteger>(
                 codeFilePath,
                 namespaceName,
                 typeName,
@@ -454,7 +454,7 @@ namespace R5T.F0083
             string description,
             bool isDraft = false)
         {
-            await this.CreateStronglyTypedType<StronglyTypedGuid>(
+            await this.CreateStronglyTypedType<StronglyTypedString>(
                 codeFilePath,
                 namespaceName,
                 typeName,
@@ -525,7 +525,7 @@ namespace R5T.F0083
 				.ModifyWith(componentRendererAction)
                 .Render();
 
-            var trimmedCode = StringOperator.Instance.Trim(code) + Z0000.Strings.Instance.NewLineForEnvironment;
+            var trimmedCode = StringOperator.Instance.Trim(code) + Z0000.Strings.Instance.NewLine_ForEnvironment;
 
             FileOperator.Instance.WriteText(
                 codeFilePath,
