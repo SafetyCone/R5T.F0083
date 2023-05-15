@@ -16,6 +16,9 @@ namespace R5T.F0083
 	[FunctionalityMarker]
 	public partial interface ICodeFileGenerationOperations : IFunctionalityMarker
 	{
+        /// <summary>
+        /// Creates the initial Windows Form designer code file, containing the partial class definition used by the Windows Form designer functionality.
+        /// </summary>
         public async Task CreateFormDesignerCodeFile(
             string codeFilePath,
             string namespaceName,
@@ -527,7 +530,7 @@ namespace R5T.F0083
 
             var trimmedCode = StringOperator.Instance.Trim(code) + Z0000.Strings.Instance.NewLine_ForEnvironment;
 
-            FileOperator.Instance.WriteText(
+            FileOperator.Instance.WriteText_Synchronous(
                 codeFilePath,
                 trimmedCode);
         }
