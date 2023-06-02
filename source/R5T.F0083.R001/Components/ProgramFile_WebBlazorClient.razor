@@ -21,8 +21,8 @@ namespace @this.NamespaceName
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            @Instances.RazorOperator.AsText("builder.RootComponents.Add<App>(\"#app\");");
-            @Instances.RazorOperator.AsText("builder.RootComponents.Add<HeadOutlet>(\"head::after\");");
+            @Instances.RazorOperator.AsText("builder.RootComponents.Add<App>(\"#app\");")
+            @Instances.RazorOperator.AsText("builder.RootComponents.Add<HeadOutlet>(\"head::after\");")
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

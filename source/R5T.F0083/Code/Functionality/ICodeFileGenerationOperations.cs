@@ -249,11 +249,11 @@ namespace R5T.F0083
         }
 
         public async Task CreateMainLayoutRazorFile_WebBlazorClient(
-            string appRazorFilePath,
+            string layoutRazorFilePath,
             string namespaceName)
         {
             await this.GenerateFromComponent<MainLayout_WebBlazorClient>(
-                appRazorFilePath,
+                layoutRazorFilePath,
                 componentRenderer =>
                 {
                     componentRenderer
