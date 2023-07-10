@@ -1,21 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
-
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.11" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\R5T.F0086\source\R5T.F0086\R5T.F0086.csproj" />
     <ProjectReference Include="..\..\..\R5T.T0154\source\R5T.T0154\R5T.T0154.csproj" />
   </ItemGroup>
-
 </Project>
