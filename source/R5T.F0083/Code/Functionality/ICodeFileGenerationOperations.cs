@@ -9,6 +9,7 @@ using R5T.T0132;
 
 using R5T.F0083.R001;
 using R5T.D0083.R001;
+using Microsoft.AspNetCore.Components.Web;
 
 
 namespace R5T.F0083
@@ -207,11 +208,32 @@ namespace R5T.F0083
                 });
         }
 
+        public async Task CreateIndexHtmlFile_WebBlazorClient(
+            string codeFilePath,
+            string pageTitle)
+        {
+            await this.GenerateFromComponent<IndexHtmlFile_WebBlazorClient>(
+                codeFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.PageTitle, pageTitle)
+                        ;
+                });
+        }
+
         public async Task CreateIndexRazorFile_WebBlazorClient(
-            string appRazorFilePath)
+            string appRazorFilePath,
+            string projectNamespaceName)
         {
             await this.GenerateFromComponent<Index_WebBlazorClient>(
-                appRazorFilePath);
+                appRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.NamespaceName, projectNamespaceName)
+                        ;
+                });
         }
 
         public async Task CreateRazorComponentMarkupFile(
@@ -262,11 +284,74 @@ namespace R5T.F0083
                 });
         }
 
+        public async Task Create_ComponentsLayoutsLayoutRazorFile_WebBlazorClient(
+            string layoutRazorFilePath)
+        {
+            await this.GenerateFromComponent<Layout_ComponentsLayouts_WebBlazorClient>(
+                layoutRazorFilePath);
+        }
+
+        public async Task Create_ComponentsLayoutsLayoutCodeFile_WebBlazorClient(
+            string layoutRazorFilePath,
+            string namespaceName)
+        {
+            await this.GenerateFromComponent<LayoutCode_ComponentsLayouts_WebBlazorClient>(
+                layoutRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        ;
+                });
+        }
+
+        public async Task CreateImportsRazorFile_WebBlazorClient_Components(
+            string appRazorFilePath,
+            string projectNamespaceName)
+        {
+            await this.GenerateFromComponent<Imports_WebBlazorClient_Components>(
+                appRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        ;
+                });
+        }
+
+        public async Task CreateImportsRazorFile_WebBlazorClient_ComponentsLayouts(
+            string appRazorFilePath,
+            string projectNamespaceName)
+        {
+            await this.GenerateFromComponent<Imports_WebBlazorClient_ComponentsLayouts>(
+                appRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        ;
+                });
+        }
+
         public async Task CreateImportsRazorFile_WebBlazorClient_Main(
             string appRazorFilePath,
             string projectNamespaceName)
         {
             await this.GenerateFromComponent<Imports_WebBlazorClient_Main>(
+                appRazorFilePath,
+                componentRenderer =>
+                {
+                    componentRenderer
+                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        ;
+                });
+        }
+
+        public async Task CreateImportsRazorFile_WebBlazorClient_Pages(
+            string appRazorFilePath,
+            string projectNamespaceName)
+        {
+            await this.GenerateFromComponent<Imports_WebBlazorClient_Pages>(
                 appRazorFilePath,
                 componentRenderer =>
                 {

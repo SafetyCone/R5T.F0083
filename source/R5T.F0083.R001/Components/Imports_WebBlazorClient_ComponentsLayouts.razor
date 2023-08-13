@@ -1,0 +1,10 @@
+﻿@namespace R5T.F0083.R001
+
+
+@Instances.RazorOperator.AsText($"@namespace {this.ProjectNamespaceName}.Layouts")
+
+
+@code {
+    [Parameter]
+    public string ProjectNamespaceName { get; set; }
+}

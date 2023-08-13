@@ -1,0 +1,29 @@
+﻿@namespace R5T.F0083.R001
+
+@Instances.RazorOperator.AsText("@using R5T.R0009.Components")
+@Instances.RazorOperator.AsText("@using R5T.R0009.Layouts")
+@Instances.RazorOperator.AsText("@using R5T.R0010.Components")
+@Instances.RazorOperator.AsText("@using R5T.R0011.Components")
+
+
+@Instances.RazorOperator.AsText("@inherits LayoutBase")
+
+@Instances.RazorOperator.AsText(@"
+<BlazorWebAssemblyLayout>
+    <Head>
+        <MetaCharsetUtf8/>
+        <MetaViewportDefault/>
+        <BaseDefault/>
+        <CssOutTailwindStylesheetLink/>
+        @this.Head
+    </Head>
+    <Body>
+        @this.Body
+    </Body>
+</BlazorWebAssemblyLayout>
+")
+
+
+@code {
+
+}
