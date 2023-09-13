@@ -615,7 +615,7 @@ namespace R5T.F0083
 
             var trimmedCode = StringOperator.Instance.Trim(code) + Z0000.Strings.Instance.NewLine_ForEnvironment;
 
-            FileOperator.Instance.WriteText_Synchronous(
+            FileOperator.Instance.Write_Text_Synchronous(
                 codeFilePath,
                 trimmedCode);
         }
