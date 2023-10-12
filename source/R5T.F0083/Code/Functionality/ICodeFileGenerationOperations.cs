@@ -157,9 +157,9 @@ namespace R5T.F0083
                         .SetParameter(c => c.NamespaceName, namespaceName)
                         ;
 
-                    F0000.ActionOperator.Instance.Run(
-                        setupAction,
-                        componentRenderer);
+                    Instances.ActionOperator.Run_Actions(
+                        componentRenderer,
+                        setupAction);
                 });
         }
 
