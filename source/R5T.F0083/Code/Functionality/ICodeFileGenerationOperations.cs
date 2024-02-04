@@ -2,14 +2,14 @@ using System;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
-using R5T.F0000;
-using R5T.F0079;
+using R5T.D0083.R001;
+using R5T.F0144;
+using R5T.F0144.Extensions;
 using R5T.T0132;
 
 using R5T.F0083.R001;
-using R5T.D0083.R001;
-using Microsoft.AspNetCore.Components.Web;
 
 
 namespace R5T.F0083
@@ -28,10 +28,10 @@ namespace R5T.F0083
             await this.CreateNamespaceNamedComponent<FormDesigner>(
                 codeFilePath,
                 namespaceName,
-                componentRenderer =>
+                context =>
                 {
-                    componentRenderer
-                        .SetParameter(c => c.Name, formName)
+                    context
+                        .Set_Parameter(c => c.Name, formName)
                         ;
                 });
         }
@@ -44,10 +44,10 @@ namespace R5T.F0083
             await this.CreateNamespaceNamedComponent<FormClass>(
                 codeFilePath,
                 namespaceName,
-                componentRenderer =>
+                context =>
                 {
-                    componentRenderer
-                        .SetParameter(c => c.Name, formName)
+                    context
+                        .Set_Parameter(c => c.Name, formName)
                         ;
                 });
         }
@@ -60,10 +60,10 @@ namespace R5T.F0083
             await this.CreateNamespaceNamedComponent<Instance_DeployScripts>(
                 codeFilePath,
                 namespaceName,
-                componentRenderer =>
+                context =>
                 {
-                    componentRenderer
-                        .SetParameter(c => c.TargetProjectName, targetProjectName)
+                    context
+                        .Set_Parameter(c => c.TargetProjectName, targetProjectName)
                         ;
                 });
         }
@@ -77,11 +77,11 @@ namespace R5T.F0083
             await this.CreateNamespaceNamedComponent<InstanceClass>(
                 codeFilePath,
                 namespaceName,
-                componentRenderer =>
+                context =>
                 {
-                    componentRenderer
-                        .SetParameter(c => c.ClassTypeName, classTypeName)
-                        .SetParameter(c => c.InterfaceTypeName, interfaceTypeName)
+                    context
+                        .Set_Parameter(c => c.ClassTypeName, classTypeName)
+                        .Set_Parameter(c => c.InterfaceTypeName, interfaceTypeName)
                         ;
                 });
         }
@@ -94,18 +94,18 @@ namespace R5T.F0083
             string markerInterfaceTypeName,
             string[] usedNamespacedNames)
         {
-            var markerAttributeName = TypeNameOperator.Instance.GetAttributeNameFromAttributeTypeName(markerAttributeTypeName);
+            var markerAttributeName = Instances.TypeNameOperator.Get_AttributeNameFromAttributeTypeName(markerAttributeTypeName);
 
             await this.CreateNamespaceNamedComponent<InstanceInterface>(
                 codeFilePath,
                 namspaceName,
-                componentRenderer =>
+                context =>
                 {
-                    componentRenderer
-                        .SetParameter(c => c.InterfaceName, interfaceTypeName)
-                        .SetParameter(c => c.MarkerAttributeName, markerAttributeName)
-                        .SetParameter(c => c.MarkerInterfaceTypeName, markerInterfaceTypeName)
-                        .SetParameter(c => c.UsedNamespaceNames, usedNamespacedNames)
+                    context
+                        .Set_Parameter(c => c.InterfaceName, interfaceTypeName)
+                        .Set_Parameter(c => c.MarkerAttributeName, markerAttributeName)
+                        .Set_Parameter(c => c.MarkerInterfaceTypeName, markerInterfaceTypeName)
+                        .Set_Parameter(c => c.UsedNamespaceNames, usedNamespacedNames)
                         ;
                 });
         }
@@ -146,19 +146,19 @@ namespace R5T.F0083
         public async Task CreateNamespaceNamedComponent<TComponent>(
             string filePath,
             string namespaceName,
-            Action<ComponentRenderer<TComponent>> setupAction = default)
+            Action<ComponentRenderingContext<TComponent>> setupAction = default)
             where TComponent : R001.Internal.NamespaceNamedBase
         {
             await this.GenerateFromComponent<TComponent>(
                 filePath,
-                componentRenderer =>
+                componentRenderingContext =>
                 {
-                    componentRenderer
-                        .SetParameter(c => c.NamespaceName, namespaceName)
+                    componentRenderingContext
+                        .Set_Parameter(c => c.NamespaceName, namespaceName)
                         ;
 
                     Instances.ActionOperator.Run_Actions(
-                        componentRenderer,
+                        componentRenderingContext,
                         setupAction);
                 });
         }
@@ -171,7 +171,7 @@ namespace R5T.F0083
             await this.CreateNamespaceNamedComponent<Class>(
                 classCSharpFilePath,
                 namespaceName,
-                componentRenderer => componentRenderer.SetParameter(c => c.ClassName, className));
+                componentRenderer => componentRenderer.Set_Parameter(c => c.ClassName, className));
         }
 
         public async Task CreateInterfaceCSharpFile(
@@ -182,7 +182,7 @@ namespace R5T.F0083
             await this.CreateNamespaceNamedComponent<Interface>(
                 classCSharpFilePath,
                 namespaceName,
-                componentRenderer => componentRenderer.SetParameter(c => c.InterfaceName, interfaceName));
+                componentRenderer => componentRenderer.Set_Parameter(c => c.InterfaceName, interfaceName));
         }
 
         public async Task CreateExampleComponentRazorFile(
@@ -203,7 +203,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.PageTitle, pageTitle)
+                        .Set_Parameter(c => c.PageTitle, pageTitle)
                         ;
                 });
         }
@@ -217,7 +217,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.PageTitle, pageTitle)
+                        .Set_Parameter(c => c.PageTitle, pageTitle)
                         ;
                 });
         }
@@ -231,7 +231,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.NamespaceName, projectNamespaceName)
+                        .Set_Parameter(c => c.NamespaceName, projectNamespaceName)
                         ;
                 });
         }
@@ -253,7 +253,7 @@ namespace R5T.F0083
             await this.CreateNamespaceNamedComponent<RazorComponentCodeBehind>(
                 markupFilePath,
                 namespaceName,
-                componentRenderer => componentRenderer.SetParameter(c => c.ComponentName, componentName));
+                componentRenderer => componentRenderer.Set_Parameter(c => c.ComponentName, componentName));
         }
 
         public async Task CreateStaticRazorComponentsHost(
@@ -265,7 +265,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        .Set_Parameter(c => c.NamespaceName, namespaceName)
                         ;
                 });
         }
@@ -279,7 +279,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        .Set_Parameter(c => c.NamespaceName, namespaceName)
                         ;
                 });
         }
@@ -300,7 +300,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        .Set_Parameter(c => c.NamespaceName, namespaceName)
                         ;
                 });
         }
@@ -314,7 +314,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        .Set_Parameter(c => c.ProjectNamespaceName, projectNamespaceName)
                         ;
                 });
         }
@@ -328,7 +328,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        .Set_Parameter(c => c.ProjectNamespaceName, projectNamespaceName)
                         ;
                 });
         }
@@ -342,7 +342,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        .Set_Parameter(c => c.ProjectNamespaceName, projectNamespaceName)
                         ;
                 });
         }
@@ -356,7 +356,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.ProjectNamespaceName, projectNamespaceName)
+                        .Set_Parameter(c => c.ProjectNamespaceName, projectNamespaceName)
                         ;
                 });
         }
@@ -377,7 +377,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.NamespaceName, namespaceName)
+                        .Set_Parameter(c => c.NamespaceName, namespaceName)
                         ;
                 });
         }
@@ -410,7 +410,7 @@ namespace R5T.F0083
             bool lowerProjectName = true)
         {
             var actualProjectName = lowerProjectName
-                ? F0000.StringOperator.Instance.Lower(projectName)
+                ? Instances.StringOperator.Lower(projectName)
                 : projectName
                 ;
 
@@ -419,8 +419,8 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.ProjectName, actualProjectName)
-                        .SetParameter(c => c.ProjectDescription, projectDescription)
+                        .Set_Parameter(c => c.ProjectName, actualProjectName)
+                        .Set_Parameter(c => c.ProjectDescription, projectDescription)
                         ;
                 });
         }
@@ -434,7 +434,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.ProjectName, projectName)
+                        .Set_Parameter(c => c.ProjectName, projectName)
                         ;
                 });
         }
@@ -448,7 +448,7 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.ProjectName, projectName)
+                        .Set_Parameter(c => c.ProjectName, projectName)
                         ;
                 });
         }
@@ -463,8 +463,8 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.NamespaceName, namespaceName)
-                        .SetParameter(c => c.ProjectDescription, projectDescription)
+                        .Set_Parameter(c => c.NamespaceName, namespaceName)
+                        .Set_Parameter(c => c.ProjectDescription, projectDescription)
                         ;
                 });
         }
@@ -482,10 +482,10 @@ namespace R5T.F0083
                 componentRenderer =>
                 {
                     componentRenderer
-                        .SetParameter(c => c.NamespaceName, namespaceName)
-                        .SetParameter(c => c.TypeName, typeName)
-                        .SetParameter(c => c.Description, description)
-                        .SetParameter(c => c.IsDraft, isDraft)
+                        .Set_Parameter(c => c.NamespaceName, namespaceName)
+                        .Set_Parameter(c => c.TypeName, typeName)
+                        .Set_Parameter(c => c.Description, description)
+                        .Set_Parameter(c => c.IsDraft, isDraft)
                         ;
                 });
         }
@@ -586,7 +586,8 @@ namespace R5T.F0083
                 namespaceName);
         }
 
-        public async Task CreateProgramFile_Console(
+        /// <inheritdoc cref="ProgramFile_Console"/>
+        public async Task Create_ProgramFile_ForConsole(
 			string programCodeFilePath,
 			string namespaceName)
 		{
@@ -606,16 +607,15 @@ namespace R5T.F0083
 
         public async Task GenerateFromComponent<TComponent>(
 			string codeFilePath,
-			Action<ComponentRenderer<TComponent>> componentRendererAction = default)
+			Action<ComponentRenderingContext<TComponent>> componentRenderingContextAction = default)
 			where TComponent : IComponent
 		{
-            var code = await ComponentOperator.Instance.NewRenderer<TComponent>()
-				.ModifyWith(componentRendererAction)
-                .Render();
+            var code = await Instances.BlazorRenderingOperator.Render(
+                componentRenderingContextAction);
 
-            var trimmedCode = StringOperator.Instance.Trim(code) + Z0000.Strings.Instance.NewLine_ForEnvironment;
+            var trimmedCode = Instances.StringOperator.Trim(code) + Instances.Strings.NewLine_ForEnvironment;
 
-            FileOperator.Instance.Write_Text_Synchronous(
+            await Instances.FileOperator.Write_Text(
                 codeFilePath,
                 trimmedCode);
         }

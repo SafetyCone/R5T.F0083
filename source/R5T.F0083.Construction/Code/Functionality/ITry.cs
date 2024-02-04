@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 
 using R5T.T0132;
-using R5T.Z0021;
 
 
 namespace R5T.F0083.Construction
@@ -13,17 +12,17 @@ namespace R5T.F0083.Construction
 		public async Task CreateProgramFile()
 		{
 			/// Inputs.
-			var namespaceName = NamespaceNames.Instance.N0001;
+			var namespaceName = Instances.NamespaceNames.N0001;
 
-			var codeFilePath = CodeFilePaths.Instance.TempCSharp;
+			var codeFilePath = Instances.CodeFilePaths.TempCSharp;
 
 
 			/// Run.
-			await CodeFileGenerationOperations.Instance.CreateProgramFile_Console(
+			await Instances.CodeFileGenerationOperations.Create_ProgramFile_ForConsole(
 				codeFilePath,
 				namespaceName);
 
-			F0033.NotepadPlusPlusOperator.Instance.Open(
+            Instances.NotepadPlusPlusOperator.Open(
 				codeFilePath);
 		}
 	}
