@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Label="Main">
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1573;1587;1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Label="Package">
+    <Version>1.0.0</Version>
+    <Authors>DCoats</Authors>
+    <Company>Rivet</Company>
+    <Copyright>Copyright © Rivet 2024</Copyright>
+    <Description>Code file generation context operations using Razor components.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\R5T.F0083\R5T.F0083.csproj" />
+    <ProjectReference Include="..\..\..\R5T.T0241\source\R5T.T0241\R5T.T0241.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0093\source\R5T.L0093.T000\R5T.L0093.T000.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0096\source\R5T.L0096.T000\R5T.L0096.T000.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0091\source\R5T.L0091.T000\R5T.L0091.T000.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0092\source\R5T.L0092.T001\R5T.L0092.T001.csproj" />
+  </ItemGroup>
+</Project>

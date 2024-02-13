@@ -110,7 +110,7 @@ namespace R5T.F0083
                 });
         }
 
-        public async Task CreateInstancesClass(
+        public async Task Create_InstancesFile(
             string instancesCSharpCodeFilePath,
             string namespaceName)
         {
@@ -453,7 +453,7 @@ namespace R5T.F0083
                 });
         }
 
-        public async Task CreateDocumentationFile(
+        public async Task Create_DocumentationFile(
             string codeFilePath,
             string namespaceName,
             string projectDescription)
