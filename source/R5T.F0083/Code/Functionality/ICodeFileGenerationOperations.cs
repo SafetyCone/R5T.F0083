@@ -104,7 +104,6 @@ namespace R5T.F0083
                     context
                         .Set_Parameter(c => c.InterfaceName, interfaceTypeName)
                         .Set_Parameter(c => c.MarkerAttributeName, markerAttributeName)
-                        .Set_Parameter(c => c.MarkerInterfaceTypeName, markerInterfaceTypeName)
                         .Set_Parameter(c => c.UsedNamespaceNames, usedNamespacedNames)
                         ;
                 });
